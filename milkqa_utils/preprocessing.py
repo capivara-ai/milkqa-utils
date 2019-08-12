@@ -2,9 +2,11 @@
 import nltk
 import re
 import string
+from typing import Iterable
+from typing import List
 
 
-def tokenize(input_string: str) -> list:
+def tokenize(input_string: str) -> List[str]:
     """Tokenizes a string using ``nltk.word_tokenizer`` and returns the list of tokens.
 
     Args:
@@ -28,7 +30,7 @@ def has_alphanum(token: str) -> bool:
     return any(re.findall(r"[a-zA-Z]|[0-9]", token))
 
 
-def remove_punctuation(token_list: iterable) -> filter:
+def remove_punctuation(token_list: Iterable) -> filter:
     """Removes punctuation-only tokens from ``token_list``.
 
     Args:
@@ -40,7 +42,7 @@ def remove_punctuation(token_list: iterable) -> filter:
     return filter(has_alphanum, token_list)
 
 
-def remove_stopwords(token_list: iterable) -> filter:
+def remove_stopwords(token_list: Iterable) -> filter:
     """Removes stopwords from ``token_list`` according to the list given by nltk.
 
     Args:
