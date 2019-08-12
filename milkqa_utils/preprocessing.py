@@ -4,6 +4,20 @@ import re
 import string
 from typing import Iterable
 from typing import List
+from typing import Callable
+
+
+def truecase(input_string: str, case_func: Callable[[str], str] = str.lower) -> str:
+    """Truecases a string.
+
+    Args:
+        input_string: The input string.
+        case_func: The function that will be used to change the string case (by default ``str.lower``).
+
+    Returns:
+        The truecased string.
+    """
+    return case_func(input_string)
 
 
 def tokenize(input_string: str) -> List[str]:
@@ -27,7 +41,8 @@ def has_alphanum(token: str) -> bool:
     Returns:
         True if ``token`` contains at least one alphanumeric character, False otherwise.
     """
-    return any(re.findall(r"[a-zA-Z]|[0-9]", token))
+    pattern = re.compile(r"\w", re.UNICODE)
+    return any(pattern.findall(token))
 
 
 def remove_punctuation(token_list: Iterable) -> filter:
@@ -53,3 +68,27 @@ def remove_stopwords(token_list: Iterable) -> filter:
     """
     stopwords = nltk.corpus.stopwords.words("portuguese")
     return filter(lambda x: x not in stopwords, token_list)
+
+
+def preprocess(
+    input_string: str,
+    preprocessing_steps: List[Callable[[Iterable], Iterable]] = [
+        remove_punctuation,
+        remove_stopwords,
+    ],
+) -> List[str]:
+    """Preprocessess a string by applying a list of preprocessing steps.
+
+    Args:
+        input_string: The input string.
+        preprocessing_steps: A list of functions that will be applied to ``input_string``.
+
+    Returns:
+        The list of preprocessed tokens.
+    """
+    preprocessed_tokens = truecase(input_string)
+    preprocessed_tokens = tokenize(preprocessed_tokens)
+
+    for step in preprocessing_steps:
+        preprocessed_tokens = step(preprocessed_tokens)
+    return list(preprocessed_tokens)
