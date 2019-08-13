@@ -1,11 +1,10 @@
 """Script to preprocess documents."""
-import nltk
 import re
-import string
 import logging
 from typing import Iterable
 from typing import List
 from typing import Callable
+import nltk
 
 
 def truecase(input_string: str, case_func: Callable[[str], str] = str.lower) -> str:

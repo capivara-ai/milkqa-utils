@@ -1,7 +1,7 @@
 """Tests for feature_extraction.py"""
-from milkqa_utils import feature_extraction
 import math
 import pytest
+from milkqa_utils import feature_extraction
 
 
 def test_idf_single_term():
