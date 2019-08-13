@@ -94,5 +94,5 @@ def preprocess(
         for step in preprocessing_steps:
             preprocessed_tokens = step(preprocessed_tokens)
         return list(preprocessed_tokens)
-    except Exception as ex:
+    except TypeError as ex:
         logging.traceback(ex)
