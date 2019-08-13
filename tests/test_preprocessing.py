@@ -1,4 +1,5 @@
 """Tests for src/preprocessing.py."""
+import pytest
 from milkqa_utils import preprocessing
 
 
@@ -265,4 +266,9 @@ def test_preprocess_custom_steps():
         "dornic",
         ".",
     ]
+
+
+def test_preprocess_raises_exception():
+    with pytest.raises(TypeError):
+        preprocessing.preprocess(1000)
 

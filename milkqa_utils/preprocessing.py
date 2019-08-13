@@ -2,6 +2,7 @@
 import nltk
 import re
 import string
+import logging
 from typing import Iterable
 from typing import List
 from typing import Callable
@@ -86,9 +87,12 @@ def preprocess(
     Returns:
         The list of preprocessed tokens.
     """
-    preprocessed_tokens = truecase(input_string)
-    preprocessed_tokens = tokenize(preprocessed_tokens)
+    try:
+        preprocessed_tokens = truecase(input_string)
+        preprocessed_tokens = tokenize(preprocessed_tokens)
 
-    for step in preprocessing_steps:
-        preprocessed_tokens = step(preprocessed_tokens)
-    return list(preprocessed_tokens)
+        for step in preprocessing_steps:
+            preprocessed_tokens = step(preprocessed_tokens)
+        return list(preprocessed_tokens)
+    except Exception as ex:
+        logging.traceback(ex)
