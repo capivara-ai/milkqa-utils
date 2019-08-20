@@ -14,5 +14,5 @@ def idf_single_term(term: str, documents: List[List[str]]) -> float:
         The idf value for ``term`` given ``documents``.
     """
     n = len(documents)
-    n_term_in_doc = sum([1 for doc in documents if term in doc])
+    n_term_in_doc = sum(1 for doc in documents if term in doc)
     return math.log(n / (1 + n_term_in_doc))
