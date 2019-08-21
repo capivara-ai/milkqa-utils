@@ -26,24 +26,16 @@ def test_wwm_get_matches():
     ) == ["gato", "cachorro"]
 
 
-def test_wwm_single_pair():
-    assert baseline_models.wwm_score_pair(
-        ["você", "gosta", "de", "comer", "batata"], ["batata", "é", "bom"]
-    ) == math.log(2 / 3)
-    assert baseline_models.wwm_score_pair(
-        ["o", "gato", "o", "gato", "é", "fofo"], ["o", "gato", "sim"]
-    ) == 2 * math.log(2 / 3)
-    assert (
-        baseline_models.wwm_score_pair(
-            ["o", "gato", "o", "gato", "é", "fofo"], ["o", "cachorro", "sim"]
-        )
-        == 0
-    )
-    assert baseline_models.wwm_score_pair(
-        ["o", "gato", "o", "cachorro", "é", "fofo"],
-        ["o", "gato", "sim", "gato", "sim", "cachorro", "também"],
-    ) == 2 * math.log(2 / 3)
-    assert baseline_models.wwm_score_pair(
-        ["o", "gato", "o", "cachorro", "é", "fofo", "cachorro"],
-        ["o", "gato", "sim", "gato", "sim", "cachorro", "também"],
-    ) == 3 * math.log(2 / 3)
+def test_wwm_score():
+    assert baseline_models.wwm_score(
+        ["você", "gosta", "de", "comer", "batata"], [["batata", "é", "bom"]]
+    ) == [math.log(2 / 3)]
+    assert baseline_models.wwm_score(
+        ["o", "gato", "o", "gato", "é", "fofo"],
+        [
+            ["o", "gato", "sim"],
+            ["o", "gato", "o", "gato", "é", "fofo"],
+            ["o", "cachorro", "sim"],
+        ],
+    ) == [2 * math.log(1), 2 * math.log(1) + math.log(4 / 3), 0]
+
