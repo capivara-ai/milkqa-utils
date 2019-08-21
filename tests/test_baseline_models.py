@@ -35,7 +35,7 @@ def test_wwm_score():
         [
             ["o", "gato", "sim"],
             ["o", "gato", "o", "gato", "é", "fofo"],
-            ["o", "cachorro", "sim"],
+            ["o", "cachorro", "sim", "sim"],
         ],
     ) == [2 * math.log(1), 2 * math.log(1) + math.log(4 / 3), 0]
 
