@@ -35,13 +35,14 @@ def wwm_score(question: List[str], answers: List[List[str]]) -> List[float]:
     # TODO: Cache idf for terms already seen
     matches = [wwm_get_matches(question=question, answer=answer) for answer in answers]
     documents = [question] + answers
+    # Used for "caching" the idf calculation. It only needs to be calculated once for each term.
+    unique_matched_terms = set(sum(matches, []))
+    idfs = {
+        t: feature_extraction.idf_single_term(term=t, documents=documents)
+        for t in unique_matched_terms
+    }
     scores = []
     for match in matches:
-        scores.append(
-            sum(
-                feature_extraction.idf_single_term(term=token, documents=documents)
-                for token in match
-            )
-        )
+        scores.append(sum(idfs[token] for token in match))
     return scores
 
