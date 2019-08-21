@@ -1,3 +1,4 @@
-nltk==3.4.4
+nltk
 pytest-cov
 coveralls
+codecov

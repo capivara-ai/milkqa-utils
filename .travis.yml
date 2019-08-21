@@ -16,3 +16,4 @@ script: pytest tests/ --cov=milkqa_utils/
 
 after_success:
   - coveralls
+  - codecov
